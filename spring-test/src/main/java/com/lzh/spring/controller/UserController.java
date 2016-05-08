@@ -40,6 +40,7 @@ public class UserController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public void update(@PathVariable("id") int id , @RequestBody User user) {
+        System.out.println("update");
         userDao.update(id, user);
     }
 
