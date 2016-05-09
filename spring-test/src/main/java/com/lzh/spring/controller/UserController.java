@@ -1,5 +1,6 @@
 package com.lzh.spring.controller;
 
+import com.lzh.spring.Exception.RestException;
 import com.lzh.spring.dao.UserDao;
 import com.lzh.spring.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,12 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public User get(@PathVariable("id") int id) {
         System.out.println("get........" + id);
-        System.out.println( userDao.find(id).getName());
-        return userDao.find(id);
+        User user = userDao.find(id);
+        if (null == user) {
+            System.out.println("null.............");
+            throw new RestException(1, "User not found!", "User with id :" + id + "not found in the system");
+        }
+        return user;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
